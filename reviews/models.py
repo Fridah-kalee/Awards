@@ -8,6 +8,8 @@ class Profile(models.Model):
     profile_pic = models.ImageField(upload_to='profile/',blank='True',default='default.png')
     user =models.OneToOneField(User, on_delete = models.CASCADE,null='True')
     date_created =models.DateField(auto_now_add=True)
+
+    
     
     def save_profile(self):
         self.save
@@ -29,7 +31,12 @@ class Project(models.Model):
     @classmethod
     def all_projects(cls):
         projects =cls.objects.all()
-        return projects    
+        return projects 
+
+    @property
+    def image_url(self):
+      if self.image and hasattr(self.image, 'url'):
+        return self.image.url       
 
     def __str__(self):
         return self.title

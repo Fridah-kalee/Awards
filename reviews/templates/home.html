@@ -3,20 +3,16 @@
 {{block.super}}
 <div>
 
-    <div class="container-fluid">
+    
   <br><br>
     <div class="container-fluid">
       <div class="row">
         {% for project in my_projects %}
         <div class="col-md-4">
           <div class="card-group">
-            <div class="card card-personal mb-4">
-              <div class="view">
-                <img class="card-img-top" src="{{project.image}}" alt="...">
-                <a href="#!">
-                  <div class="mask rgba-white-slight"></div>
-                </a>
-              </div>
+            <div class="card mb-4">
+                <img src="{{project.image_url}}" alt=".">
+                
   
               <div class="card-body">
                 <h3 style="font-family: sans-serif;">{{project.title}}</h3>

@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     re_path('admin/', admin.site.urls),
     re_path('',include('reviews.urls')),
-    re_path(r'^accounts/',include('django_registration.backends.one_step.urls')),
+    re_path('accounts/',include('django_registration.backends.one_step.urls')),
+    re_path('accounts/', include('django.contrib.auth.urls')),
     re_path('logout/', auth_views.logout_then_login, name='logout'),
 ]

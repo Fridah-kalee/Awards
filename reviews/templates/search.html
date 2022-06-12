@@ -13,11 +13,18 @@
 
   <div class="row">
 
-  {% if articles %}
+  {% if projects %}
     {% for project in projects %}
-      <div class="col-sm-6 col-md-3">
+      <!-- <div class="col-sm-6 col-md-3">
           <h1>{{project.title}}</h1>
-      </div>
+      </div> -->
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <a href=""data-target="#staticBackdrop{{project.image}}">
+                <img src="{{project.image.url}}" class="img-responsive styled" style="height: 50%;width: 50%;"></a>
+        </div>
+        <div class="panel-footer"><b>{{project.user}}~</b>{{project.title}}{{project.caption}}</div>
+    </div>
     {% endfor %}
   {% endif %}
   </div>
