@@ -3,7 +3,28 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(request):
-    return render(request,'home.html')
+    project = Project.all_projects()
+    my_projects= []
+    for project in project:
+
+     pic=Profile.objects.filter(user=project.user.id).first()
+     if pic:
+        pic=pic.profile_pic.url
+     else:
+        pic=''
+     obj = dict(
+        title=project.title,
+        image=project.image,
+        link=project.link,
+        description=project.description,
+        avatar=pic,
+        date_created=project.date_created,
+        author=project.user.username
+     )
+     my_projects.append(obj)   
+
+
+    return render(request,'home.html',{'my_projects':my_projects})
 
 def search_results(request):
     if 'project' in request.GET and request.GET["project"]:
