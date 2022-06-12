@@ -1,27 +1,29 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from .models import Profile,Project
+from django.contrib.auth import authenticate,login,logout
 
 # Create your views here.
 def home(request):
-    project = Project.all_projects()
+    project=Project.all_projects()
     my_projects= []
     for project in project:
 
-     pic=Profile.objects.filter(user=project.user.id).first()
-     if pic:
-        pic=pic.profile_pic.url
-     else:
-        pic=''
-     obj = dict(
+        pic=Profile.objects.filter(user=project.user).first()
+        if pic:
+           pic=pic.profile_pic.url
+        else:
+            pic=''
+        obj = dict(
         title=project.title,
         image=project.image,
         link=project.link,
         description=project.description,
         avatar=pic,
         date_created=project.date_created,
-        author=project.user.username
+        author=project.user
      )
-     my_projects.append(obj)   
+        my_projects.append(obj)   
 
 
     return render(request,'home.html',{'my_projects':my_projects})

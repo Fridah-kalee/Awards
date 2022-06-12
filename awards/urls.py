@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import re_path,include
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     re_path('admin/', admin.site.urls),
-    re_path(r'^reviews/',include('reviews.urls')),
+    re_path('',include('reviews.urls')),
     re_path(r'^accounts/',include('django_registration.backends.one_step.urls')),
+    re_path('logout/', auth_views.logout_then_login, name='logout'),
 ]
