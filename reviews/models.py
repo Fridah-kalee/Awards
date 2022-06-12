@@ -5,14 +5,15 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
     username = models.CharField(max_length=30)
     bio = models.TextField()
-    profile_pic = models.ImageField(upload_to='profile/',blank=True,default='')
+    profile_pic = models.ImageField(upload_to='profile/',blank='True',default='default.png')
+    user =models.OneToOneField(User, on_delete = models.CASCADE)
     date_created =models.DateField(auto_now_add=True)
     
     def save_profile(self):
         self.save
     
     def __str__(self):
-        return self.username 
+        return self.user.username 
 
 class Project(models.Model):
     title = models.TextField(max_length=30)
