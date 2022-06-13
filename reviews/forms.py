@@ -22,13 +22,13 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields =['image', 'bio']
+        fields =['bio']
 
 
 class  NewProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['image','title','url','description',]
+        fields = ['title','url','description',]
 
 class RatingsForm(forms.ModelForm):
 

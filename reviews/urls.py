@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from .views import *
 from reviews import views as user_views
 
+
 urlpatterns=[
     re_path('^$',views.home,name='home'),
     # re_path('accounts/register/', views.register, name='register'),
@@ -13,7 +14,10 @@ urlpatterns=[
     re_path('ratings/<post>/', views.review, name='ratings'),
     re_path('profile/', views.profile,name ='profile'),
     re_path('update_profile/', user_views.update_profile,name = 'update_profile'),
+    re_path('api/projects/', views.ProjectList.as_view()),
+    re_path('api/profiles/',views.ProfileList.as_view()),
 ]
+
 
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

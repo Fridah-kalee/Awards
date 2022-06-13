@@ -8,6 +8,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import messages
+from rest_framework.views import APIView
+from rest_framework import generics,permissions
+from .serializers import * 
+from .permissions import IsAdminOrReadOnly
+from rest_framework.response import Response
+
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
@@ -53,7 +59,7 @@ def profile(request):
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
-        if user_form.is_valid and profile_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             messages.success(request,f'Your account has been updated successfully!')
@@ -83,13 +89,13 @@ def update_profile(request):
 
     else:
         user_form = UserUpdateForm(instance=request.user)
-        profile_form = ProfileUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
 
-        context = {
+    context = {
             'user_form': user_form,
             'profile_form': profile_form
 
-        }
+    }
 
     return render(request, 'update_profile.html', context)    
 
@@ -161,4 +167,20 @@ def review(request, post):
         'rating_form': form,
         'rating_status': rating_status
     }
-    return render(request, 'ratings.html', params)        
+    return render(request, 'ratings.html', params)
+
+class ProjectList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get(self,request,format=None):
+        projects = Project.objects.all()
+        serializer =ProjectSerializer(projects,many=True)
+        return Response(serializer.data)
+
+        
+
+class ProfileList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get(self,request,format=None):
+        profiles = Profile.objects.all()
+        serializer =ProfileSerializer(profiles,many=True)
+        return Response(serializer.data)            

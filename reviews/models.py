@@ -1,17 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime as dt
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 class Profile(models.Model):
-    # username = models.CharField(max_length=30)
+    image = models.ImageField(upload_to = 'profile/',blank = 'True',default='default.png')
     bio = models.TextField()
-    image = models.ImageField(upload_to='profile/',default='default.png')
     user =models.OneToOneField(User, on_delete = models.CASCADE,null='True')
     date_created =models.DateField(auto_now_add=True)
 
     
     
+
     def save_profile(self):
         self.save
 
@@ -20,11 +22,17 @@ class Profile(models.Model):
 
           
     def __str__(self):
-        return f'{self.user} Profile' 
+        return f'{self.user} Profile'
+
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, created, **kwargs):
+
+        if created:
+            Profile.objects.create(user=instance) 
 
 class Project(models.Model):
+    image = models.ImageField(upload_to = 'profile/',blank = True)
     title = models.TextField(max_length=30)
-    image =models.ImageField(upload_to ='profile/',default ='my image')
     url= models.URLField(max_length=200)
     description = models.TextField(max_length=300)
     user=models.ForeignKey(User, on_delete=models.CASCADE,default='',null=True,related_name='author')

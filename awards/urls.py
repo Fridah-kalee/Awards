@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import re_path,include
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     re_path('admin/', admin.site.urls),
     re_path('',include('reviews.urls')),
