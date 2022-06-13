@@ -31,12 +31,14 @@ class Profile(models.Model):
             Profile.objects.create(user=instance) 
 
 class Project(models.Model):
-    image = models.ImageField(upload_to = 'profile/',blank = True)
+    image = models.ImageField(upload_to = 'profile/',default='no image')
     title = models.TextField(max_length=30)
     url= models.URLField(max_length=200)
     description = models.TextField(max_length=300)
     user=models.ForeignKey(User, on_delete=models.CASCADE,default='',null=True,related_name='author')
     date_created= models.DateField(auto_now_add=True )
+
+    
 
     def save_project(self):
         self.save()

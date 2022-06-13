@@ -4,18 +4,15 @@
 
 <div class="container-fluid">
     <div class="row">
-      {% for project in my_projects %}
+      {% for project in projects %}
       <div class="col-md-4">
         <div class="card-group">
           
           <div class="card card-personal mb-4">
             <div class="view">
               <a href="">
-                <img class="" src="{{project.image}}" alt="image" style="height: 400px; width: 500px;">
-              
-              <!-- <img src="/{{ MEDIA_URL }}{{ item.item_image.url }}" alt="img"> -->
-    
-             </a>
+                <img class="card-img-top" style="height:280px; width:420px;" src="{{project.image}}" alt="Card image cap">
+              </a>
             </div>
 
             <div class="card-body">
@@ -25,13 +22,11 @@
 			        </a>
 
               <p class="card-text"><b>Description:</b>{{project.description}}</p>
-              
-            
-            
               <hr>
-              <span><a href="profile"> <img style="border-radius: 50%; width:30px; height:30px; "
+              <span><a href="profile">
+                 <img style="border-radius: 50%; width:30px; height:30px; "
                     src="{{project.avatar }}" alt="image"></a>By
-                <b>{{project.author}}</b></span>
+                <b>{{project.user.username}}</b></span>
 
               <p class="card-meta float-right">Posted {{project.date_created}} </p>
 

@@ -5,9 +5,9 @@
     <h5 class="mb-4 mt-4">{{ project.title }} by {{ project.user.username }} from {{ project.user.profile.location }} <span
             id="heart"> <i class="fas fa-heart"></i></span></h5>
     <div class="card">
-        <div class="view overlay" style="background-image:url({{project.image.cdn_url}})">
+        <div class="view overlay" style="background-image:url({{project.image.url}})">
             <img class="card-img-top" style="visibility:hidden" width="100%"
-                 src="{{ project.image.cdn_url }}-/crop/1440x720/center/-/quality/lightest/" alt="{{image.title}}">
+                 src="{{ project.image.url }}-/crop/1440x720/center/-/quality/lightest/" alt="{{image.title}}">
             <a href="">
                 <div class="mask rgba-black-slight">
                     <div class="container">

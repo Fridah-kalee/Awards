@@ -18,25 +18,14 @@ from rest_framework.response import Response
 
 @login_required(login_url='/accounts/login/')
 def home(request):
-    project=Project.all_projects()
-    my_projects = []
-    for project in project:
-        pic = Profile.objects.filter(user=project.user).first()
-        if pic:
-            pic = pic.image.url
-        else:
-            pic = ''
-        obj = dict(
-            title=project.title,
-            image=project.image,
-            avatar=pic,
-            description=project.description,
-            author=project.user,
-            date_created=project.date_created,
-        )
-        my_projects.append(obj)
+    projects = Project.all_projects()
+    context={
+        'projects' : projects,
+    }
+   
+    
+    return render(request,'home.html', context)
 
-    return render(request, 'home.html',{"my_projects":my_projects})
 
 
 @login_required(login_url='/accounts/login/')
