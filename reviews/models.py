@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime as dt
+
 # Create your models here.
 class Profile(models.Model):
-    username = models.CharField(max_length=30)
+    # username = models.CharField(max_length=30)
     bio = models.TextField()
-    profile_pic = models.ImageField(upload_to='profile/',blank='True',default='default.png')
+    image = models.ImageField(upload_to='profile/',default='default.png')
     user =models.OneToOneField(User, on_delete = models.CASCADE,null='True')
     date_created =models.DateField(auto_now_add=True)
 
@@ -15,14 +16,15 @@ class Profile(models.Model):
         self.save
 
     def delete_user(self):
-        self.delete()    
-    
+        self.delete()
+
+          
     def __str__(self):
-        return f'{self.user.username} Profile' 
+        return f'{self.user} Profile' 
 
 class Project(models.Model):
     title = models.TextField(max_length=30)
-    image =models.ImageField(upload_to ='home/',default ='my image')
+    image =models.ImageField(upload_to ='profile/',default ='my image')
     url= models.URLField(max_length=200)
     description = models.TextField(max_length=300)
     user=models.ForeignKey(User, on_delete=models.CASCADE,default='',null=True,related_name='author')

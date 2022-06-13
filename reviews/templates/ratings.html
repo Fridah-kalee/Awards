@@ -37,7 +37,7 @@
         <div class="card-body">
             <h5 class="card-title"><strong>{{project.title|title}}</strong>
                 <a href="{{ project.url }}" style="float:right" class="btn btn-sm btn-info mr-4"> Visit </a></h5>
-            <p>by <span><a href="{% url 'userprofile' project.user.username %}" id="usern" class="mr-2">{{ project.user.username|title }}</a></span>({{project.user.profile.location}})
+            <p>by <span><a href="{% url 'userprofile' project.user.username %}" id="usern" class="mr-2">{{ project.user.username|title }}</a></span>
             </p>
             <p>{{ project.description }}</p>
             <hr>

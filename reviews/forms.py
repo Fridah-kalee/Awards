@@ -19,10 +19,10 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['username','email']
 
-# class ProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields =['profile_pic', 'bio']
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields =['image', 'bio']
 
 
 class  NewProjectForm(forms.ModelForm):
