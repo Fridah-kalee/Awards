@@ -1,9 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Profile,Project
+from .models import *
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
-from .forms import UserUpdateForm, SignUpForm, NewProjectForm
+from .forms import *
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
@@ -20,7 +22,7 @@ def home(request):
         obj = dict(
             title=project.title,
             image=project.image,
-            link=project.link,
+            url=project.url,
             description=project.description,
             avatar=pic,
             date_created=project.date_created,
@@ -76,3 +78,42 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+def project(request, post):
+    post = Project.objects.get(title=post)
+    ratings = Ratings.objects.filter(user=request.user, post=post).first()
+    rating_status = None
+    if ratings is None:
+        rating_status = False
+    else:
+        rating_status = True
+    if request.method == 'POST':
+        form = RatingsForm(request.POST)
+        if form.is_valid():
+            rate = form.save(commit=False)
+            rate.user = request.user
+            rate.post = post
+            rate.save()
+            post_ratings = Ratings.objects.filter(post=post)
+            design_ratings = [des.design_rate for des in post_ratings]
+            design_avr = sum(design_ratings) / len(design_ratings)
+            usability_ratings = [usa.usability_rate for usa in post_ratings]
+            usability_avr = sum(usability_ratings) / len(usability_ratings)
+            content_ratings = [content.content_rate for content in post_ratings]
+            content_avr = sum(content_ratings) / len(content_ratings)
+            overall_score = (design_avr + usability_avr + content_avr) / 3
+            print(overall_score)
+            rate.design_avr = round(design_avr, 2)
+            rate.usability_avr = round(usability_avr, 2)
+            rate.content_avr = round(content_avr, 2)
+            rate.overall_score = round(overall_score, 2)
+            rate.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = RatingsForm()
+    params = {
+        'post': post,
+        'rating_form': form,
+        'rating_status': rating_status
+    }
+    return render(request, 'ratings.html', params)        

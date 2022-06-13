@@ -11,7 +11,8 @@
         <div class="col-md-4">
           <div class="card-group">
             <div class="card mb-4">
-                <img src="{{project.image_url}}" alt=".">
+                <a href="{% url 'ratings' project.title %}">
+                <img src="{{project.image}}" alt="."></a>
                 
   
               <div class="card-body">
