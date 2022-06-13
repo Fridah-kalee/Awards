@@ -7,7 +7,16 @@
       {% for project in my_projects %}
       <div class="col-md-4">
         <div class="card-group">
-          <div class="card-body">
+          
+          <div class="card card-personal mb-4">
+            <div class="view">
+              <a href="">
+              <img class="card-img-top" src="{{ project.image_url|default_if_none:'#' }}"  alt="Card image cap" style="height: 400px; width: 500px;">
+    
+             </a>
+            </div>
+
+            <div class="card-body">
               <h3 style="font-family: sans-serif;">{{project.title}}</h3>
               <a class="my-3 mx-auto text-center text-light" href="{{project.url}}">
 				        <button class="text-muted btn btn-info">Visit site</button>
@@ -18,22 +27,9 @@
             
             
               <hr>
-              <span>
-                <a href="profile">
-                 <!-- <img style="border-radius: 50%; width:30px; height:30px; "
-                    src="{{project.avatar }}" alt="image"> -->
-                    <div class="card mb-3">
-                      <div class="col-sm-10 col-md-4 text-center" style="margin-bottom: 3%;">
-                        {% if user.profile.pic%}
-                        <img src="../../media/{{user.profile.pic}}" alt="" height="80px" width="80px" style="border-radius: 50%;margin-right: 55%;">
-                        {% else %}
-                        <img src="../../media/profile/images_2.jpeg" alt="" height="80px" width="80px"style="border-radius: 50%;margin-right: 55%;">
-                        <!-- <a style="margin-bottom: 10%;">{{post.author}}</a> -->
-                        {% endif %}
-                        
-                    </div>
-                  </a>By<b>{{project.author}}</b>
-                </span>
+              <span><a href="profile"> <img style="border-radius: 50%; width:30px; height:30px; "
+                    src="{{project.avatar }}" alt="image"></a>By
+                <b>{{project.author}}</b></span>
 
               <p class="card-meta float-right">Posted {{project.date_created}} </p>
 
